@@ -22,6 +22,6 @@
   <%= error_tag f, :password_confirmation %>
 
   <div>
-    <%= submit "Create" %>
+    <%= submit "Sign Up" %>
   </div>
 <% end %>

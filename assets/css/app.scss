@@ -1,4 +1,5 @@
 /* This file is for your main application css. */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap");
 @import "./phoenix.css";
 
 /* Alerts and form errors */
@@ -33,4 +34,8 @@
   color: #a94442;
   display: block;
   margin: -1rem 0 2rem;
+}
+
+.logo {
+  font-family: "Playfair Display", serif;
 }
