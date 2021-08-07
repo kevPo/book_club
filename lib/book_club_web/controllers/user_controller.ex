@@ -4,6 +4,8 @@ defmodule BookClubWeb.UserController do
   alias BookClub.Accounts
   alias BookClub.Accounts.User
 
+  plug :prevent_unathorized_access when action in [:show, :edit]
+
   def index(conn, _params) do
     users = Accounts.list_users()
     render(conn, "index.html", users: users)
@@ -58,5 +60,23 @@ defmodule BookClubWeb.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: Routes.user_path(conn, :index))
+  end
+
+  defp prevent_unathorized_access(conn, _opts) do
+    current_user = Map.get(conn.assigns, :current_user)
+
+    requested_user_id =
+      conn.params
+      |> Map.get("id")
+      |> String.to_integer()
+
+    if current_user == nil || current_user.id != requested_user_id do
+      conn
+      |> put_flash(:error, "Sorry, you can't access this page.")
+      |> redirect(to: Routes.page_path(conn, :index))
+      |> halt()
+    else
+      conn
+    end
   end
 end
